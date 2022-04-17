@@ -1,9 +1,8 @@
 // Route (endpoint) definitions go in this directory
 
 const express = require("express");
-const myFunc = require('./src/middleware/mymiddleware.js')
 const coinRoutes = express.Router();
-app.use(myFunc)
+const coinController = require('../controllers/logcontroller.js');
 
 function coinFlip() {
 	return Math.random() > 0.5 ? ("heads") : ("tails")
@@ -79,47 +78,5 @@ coinRoutes.route('/app/flip/coins').post((req, res) => {
 
 module.exports = coinRoutes;
 
-//Connect to log db
-let Log = require('/data/db/log.db')
 
-const logRoutes = express.Router();
-
-logRoutes.route('/app/log/access').get((req, res) => {
-	const flips = coinFlips(req.params.number)
-	res.status(200).json({ 'raw': flips, "summary" : countFlips(flips)})
-})
-
-logRoutes.route('/app/log/error').get((req, res) => {
-	const flips = coinFlips(req.params.number)
-	res.status(200).json({ 'raw': flips, "summary" : countFlips(flips)})
-})
-
-module.exports = logRoutes;
-
-// Connect to user db
-let User = require('/data/db/user.db')
-
-const userRoutes = express.Router();
-
-userRoutes.route('/app/user/login').post((req, res) => {
-	const flips = coinFlips(req.params.number)
-	res.status(200).json({ 'raw': flips, "summary" : countFlips(flips)})
-})
-
-userRoutes.route('/app/user/new').post((req, res) => {
-	const flips = coinFlips(req.params.number)
-	res.status(200).json({ 'raw': flips, "summary" : countFlips(flips)})
-})
-
-userRoutes.route('/app/user/update').patch((req, res) => {
-	const flips = coinFlips(req.params.number)
-	res.status(200).json({ 'raw': flips, "summary" : countFlips(flips)})
-})
-
-userRoutes.route('/app/user/delete').delete((req, res) => {
-	const flips = coinFlips(req.params.number)
-	res.status(200).json({ 'raw': flips, "summary" : countFlips(flips)})
-})
-
-module.exports = userRoutes;
 

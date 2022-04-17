@@ -1,6 +1,6 @@
 // Middleware function definitions go here
-
-// Middleware
+// segregate any middleware needed for the application in one place. There can be middleware for authentication, logging, or any other purpose.
+// Middleware for Logging
 module.exports = {
     myFunc: function(req, res, next) {
 	let logdata = {

@@ -4,9 +4,9 @@ var app = express()
 app.use(express.static('./public'));
 const fs = require('fs')
 const morgan = require('morgan');
-const coinRoutes = require('./src/routes/someroutes.js');
-const logRoutes = require('./src/routes/someroutes.js');
-const userRoutes = require('./src/routes/someroutes.js');
+// const coinRoutes = require('./src/routes/coinRoutes.js');
+const logRoutes = require('./src/routes/logRoutes.js');
+// const userRoutes = require('./src/routes/coinRoutes.js');
 const myFunc = require('./src/middleware/mymiddleware.js')
 
 app.use(express.urlencoded({ extended: true }));
@@ -18,7 +18,7 @@ args['port', 'debug', 'log', 'help']
 const port = args.port || process.env.PORT || 5000
 const debug = args.debug || process.env.debug || 'false'
 const log = args.log || process.env.log || 'true'
-const db = require('./src/services/database.js')
+const db = require('./src/services/logdatabase.js')
 if(log == 'false'){
 // Use morgan for logging to files
 // Create a write stream to append (flags: 'a') to a file
@@ -73,9 +73,9 @@ if(debug == true){
 }
 
 // Connect to other Endpoints
-app.use(coinRoutes);
+// app.use(coinRoutes);
 app.use(logRoutes);
-app.use(userRoutes);
+// app.use(userRoutes);
 
 
 // Default response for any other request

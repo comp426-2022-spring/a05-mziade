@@ -2,9 +2,9 @@
 "use strict";
 
 const Database = require('better-sqlite3');
-
+// const config = require('../configs/general.config.js');
 // Connect to a database or create one if it doesn't exist yet.
-const db = new Database('./data/db/log.db');
+const db = new Database('log.db');
 
 // Is the database initialized or do we need to initialize it?
 const stmt = db.prepare(`
@@ -28,5 +28,12 @@ if (row === undefined) {
 // Since the database already exists, echo that to the console.
     console.log('Database exists.')
 }
+
+
+async function getAll(){
+    const stmt = db.prepare('SELECT * FROM accesslog').all()
+    return stmt;
+}
+
 // Export all of the above as a module so that we can use it elsewhere.
-module.exports = db
+module.exports = {db, getAll}
