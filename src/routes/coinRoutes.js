@@ -1,6 +1,10 @@
 // Route (endpoint) definitions go in this directory
-
-const express = require("express");
+// Add cors dependency
+var express = require('express')
+var app = express()
+const cors = require('cors')
+// Set up cors middleware on all endpoints
+app.use(cors())
 const coinRoutes = express.Router();
 
 function coinFlip() {
@@ -36,6 +40,7 @@ function countFlips(array) {
 coinRoutes.route('/app/flip').get((req, res) => {
 	var flip = coinFlip()
 	res.status(200).json({ 'flip' : flip})
+	// res.sendFile(path.join(public, './public/index.html'))
 })
 
 coinRoutes.route('/app/flips/:number').get((req, res) => {
