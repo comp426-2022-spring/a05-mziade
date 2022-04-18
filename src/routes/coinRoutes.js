@@ -61,7 +61,9 @@ function flipACoin(call) {
 }
 
 coinRoutes.route('/app/flip/coin').get((req, res) => {
-	//?
+	const flips = coinFlips(req.params.number)
+    const count = countFlips(flips)
+    res.status(200).json({"raw":flips,"summary":count})
 })
 
 coinRoutes.route('/app/flip/call/:guess').get((req, res) => {
