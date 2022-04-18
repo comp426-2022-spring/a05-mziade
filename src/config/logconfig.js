@@ -1,14 +1,17 @@
+// Configuration goes here
+
+//For example, if the app connects to a database, the configuration for the database (like database name and username) can be put in a file like db.config.js
 // Put your database code here
 "use strict";
 
 const Database = require('better-sqlite3');
 // const config = require('../configs/general.config.js');
 // Connect to a database or create one if it doesn't exist yet.
-const db = new Database('user.db');
+const db = new Database('log.db');
 
 // Is the database initialized or do we need to initialize it?
 const stmt = db.prepare(`
-    SELECT name FROM sqlite_master WHERE type='table' and name='userlog';`
+    SELECT name FROM sqlite_master WHERE type='table' and name='accesslog';`
     );
 // Define row using `get()` from better-sqlite3
 let row = stmt.get();
@@ -18,7 +21,7 @@ if (row === undefined) {
     console.log('Your database appears to be empty. I will initialize it now.');
 // Set a const that will contain your SQL commands to initialize the database.
     const sqlInit = `
-        CREATE TABLE accesslog (id INTEGER PRIMARY KEY, username TEXT, pass TEXT);
+        CREATE TABLE accesslog (id INTEGER PRIMARY KEY, remoteaddr TEXT, remoteuser TEXT, time TEXT, method TEXT, url TEXT, protocol TEXT, httpversion TEXT, status INTEGER, referer TEXT,  useragent TEXT);
         `;
 // Execute SQL commands that we just wrote above.
     db.exec(sqlInit);
@@ -29,23 +32,5 @@ if (row === undefined) {
     console.log('Database exists.')
 }
 
-
-async function login(){
-    //post login
-}
-
-async function newUser(){
-    //post new user
-}
-
-async function update(){
-    //patch update a user
-}
-
-async function delUser(){
-    //delete user
-}
-
-
 // Export all of the above as a module so that we can use it elsewhere.
-module.exports = {db, login, newUser, update, delUser}
+module.exports = db;
