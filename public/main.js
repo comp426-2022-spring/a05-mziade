@@ -1,4 +1,4 @@
-// Event listener for whatever is being clicked 
+//Event listener for whatever is being clicked 
 document.addEventListener("click", activeNow);
 // Replace text in anything with "active" id
 	function activeNow() {
@@ -23,13 +23,29 @@ single.addEventListener("click", flipCoin)
 					console.log(result);
 					document.getElementById("result").innerHTML = result.flip;
 					document.getElementById("quarter").setAttribute("src", result.flip+".jpg");
-					coin.disabled = true
+					single.disabled = true
 				})
                 let flip = "FLIPPED"
-				document.getElementById("coin").innerHTML = flip;
+				document.getElementById("single").innerHTML = flip;
 				console.log("Coin has been flipped. Result: "+ flip)
             }
 // Flip multiple coins and show coin images in table as well as summary results
+multi.addEventListener("click", flipCoins)
+			function flipCoins() {
+                fetch('http://localhost:5000/app/flip/', {mode: 'cors'})
+  				.then(function(response) {
+    			  return response.json();
+  				})
+				.then(function(result) {
+					console.log(result);
+					document.getElementById("resultmult").innerHTML = result.flip;
+					document.getElementById("quarter").setAttribute("src", result.flip+".jpg");
+					single.disabled = true
+				})
+                let flip = "FLIPPED"
+				document.getElementById("multi").innerHTML = flip;
+				console.log("Coins have been flipped. Result: "+ flip)
+            }
 // Enter number and press button to activate coin flip series
 
 // Guess a flip by clicking either heads or tails button
