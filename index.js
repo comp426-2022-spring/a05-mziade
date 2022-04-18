@@ -8,6 +8,12 @@ const coinRoutes = require('./src/routes/coinRoutes.js');
 const logRoutes = require('./src/routes/logRoutes.js');
 const userRoutes = require('./src/routes/userRoutes.js');
 const myFunc = require('./src/middleware/mymiddleware.js')
+
+// Add cors dependency
+const cors = require('cors')
+// Set up cors middleware on all endpoints
+app.use(cors())
+
 // Make Express use its own built-in body parser to handle JSON
 app.use(express.json());
 const args = require('minimist')(process.argv.slice(2))
