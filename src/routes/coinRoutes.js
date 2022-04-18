@@ -2,7 +2,6 @@
 
 const express = require("express");
 const coinRoutes = express.Router();
-const coinController = require('../controllers/logcontroller.js');
 
 function coinFlip() {
 	return Math.random() > 0.5 ? ("heads") : ("tails")
@@ -57,7 +56,7 @@ function flipACoin(call) {
 }
 
 coinRoutes.route('/app/flip/coin').get((req, res) => {
-	// todo
+	//?
 })
 
 coinRoutes.route('/app/flip/call/:guess').get((req, res) => {
@@ -65,15 +64,19 @@ coinRoutes.route('/app/flip/call/:guess').get((req, res) => {
 })
 
 coinRoutes.route('/app/flip/call/:guess').post((req, res) => {
-	 //todo
+	const game = flipACoin(req.params.guess)
+    res.status(200).json(game)
 })
 
 coinRoutes.route('/app/flip/call').post((req, res) => {
-    //todo
+    const game = flipACoin(req.body.guess)
+    res.status(200).json(game)
 })
 
 coinRoutes.route('/app/flip/coins').post((req, res) => {
- //todo
+	const flips = coinFlips(req.body.number)
+    const count = countFlips(flips)
+    res.status(200).json({"raw":flips,"summary":count})
 })
 
 module.exports = coinRoutes;

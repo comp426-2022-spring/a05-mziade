@@ -4,12 +4,10 @@ var app = express()
 app.use(express.static('./public'));
 const fs = require('fs')
 const morgan = require('morgan');
-// const coinRoutes = require('./src/routes/coinRoutes.js');
+const coinRoutes = require('./src/routes/coinRoutes.js');
 const logRoutes = require('./src/routes/logRoutes.js');
-// const userRoutes = require('./src/routes/coinRoutes.js');
+const userRoutes = require('./src/routes/userRoutes.js');
 const myFunc = require('./src/middleware/mymiddleware.js')
-
-app.use(express.urlencoded({ extended: true }));
 // Make Express use its own built-in body parser to handle JSON
 app.use(express.json());
 const args = require('minimist')(process.argv.slice(2))
@@ -73,9 +71,9 @@ if(debug == true){
 }
 
 // Connect to other Endpoints
-// app.use(coinRoutes);
+app.use(coinRoutes);
 app.use(logRoutes);
-// app.use(userRoutes);
+app.use(userRoutes);
 
 
 // Default response for any other request
