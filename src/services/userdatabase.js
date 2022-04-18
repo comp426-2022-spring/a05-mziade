@@ -1,4 +1,4 @@
-let db = require('/src/config/userconfig.js')
+let db = require('../config/userconfig')
 
 async function login(){
     //post login

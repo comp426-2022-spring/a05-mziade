@@ -13,7 +13,7 @@ async function post(req, res, next) {
     }
   }
 
-  async function user(req, res, next) {
+  async function add(req, res, next) {
     try {
         res.json(await user.newUser());
     } catch (err) {
@@ -41,5 +41,5 @@ async function post(req, res, next) {
   }
 
 
-module.exports = {post, user, patch, del}
+module.exports = {post, add, patch, del}
 
