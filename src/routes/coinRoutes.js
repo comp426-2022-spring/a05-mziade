@@ -40,7 +40,6 @@ function countFlips(array) {
 coinRoutes.route('/app/flip').get((req, res) => {
 	var flip = coinFlip()
 	res.status(200).json({ 'flip' : flip})
-	// res.sendFile(path.join(public, './public/index.html'))
 })
 
 coinRoutes.route('/app/flips/:number').get((req, res) => {

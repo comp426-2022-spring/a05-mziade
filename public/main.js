@@ -35,15 +35,14 @@ coins.addEventListener("submit", flipCoins)
 			async function flipCoins(event) {
 				event.preventDefault();
 				
-				const endpoint = "app/flip/coins/"
-				const url = document.baseURI+endpoint
-
+				//const endpoint = "app/flip/coins"
+				const url = 'http://localhost:5000/app/flip/coins'
+				console.log(url)
 				const formEvent = event.currentTarget
 
 				try {
 					const formData = new FormData(formEvent);
 					const flips = await sendFlips({ url, formData });
-
 					console.log(flips);
 					document.getElementById("heads").innerHTML = "Heads: "+flips.summary.heads;
 					document.getElementById("tails").innerHTML = "Tails: "+flips.summary.tails;
@@ -67,6 +66,7 @@ coins.addEventListener("submit", flipCoins)
 				};
 
 				const response = await fetch(url, options);
+				console.log(response)
 				return response.json()
 			}
 //Enter number and press button to activate coin flip series
