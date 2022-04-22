@@ -1,9 +1,8 @@
-const { myFunc } = require('../middleware/mymiddleware');
+const myFunc = require('../middleware/mymiddleware');
 let db = require('../config/logconfig')
 
 async function getAll(){
     const stmt = db.prepare('SELECT * FROM accesslog').all()
-    myFunc()
     return stmt;
 }
 
