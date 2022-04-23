@@ -22,7 +22,7 @@ singlenav.addEventListener("click", flipCoin)
 					console.log(result);
 					document.getElementById("result").innerHTML = result.flip;
 					document.getElementById("quarter").setAttribute("src", "assets/img/"+result.flip+".png");
-					singlenav.disabled = true
+					//singlenav.disabled = true
 				})
                 // let flip = "FLIPPED"
 				// document.getElementById("singlenav").innerHTML = flip;
@@ -45,7 +45,10 @@ coins.addEventListener("submit", flipCoins)
 					const flips = await sendFlips({ url, formData });
 					console.log(flips);
 					document.getElementById("heads").innerHTML = "Heads: "+flips.summary.heads;
+					document.getElementById("headscount").setAttribute("src", "assets/img/heads.png");
 					document.getElementById("tails").innerHTML = "Tails: "+flips.summary.tails;
+					document.getElementById("tailscount").setAttribute("src", "assets/img/tails.png");
+
 				} catch (error) {
 					console.log(error);
 				}
@@ -72,3 +75,36 @@ coins.addEventListener("submit", flipCoins)
 //Enter number and press button to activate coin flip series
 
 //Guess a flip by clicking either heads or tails button
+guessheads = document.getElementById("guessheads")
+guessheads.addEventListener("click", guessFlipheads)
+			function guessFlipheads() {
+                fetch('http://localhost:5000/app/flip/call/heads', {mode: 'cors'})
+  				.then(function(response) {
+    			  return response.json();
+  				})
+				.then(function(result) {
+					console.log(result);
+					document.getElementById("resultguess").innerHTML = "heads";
+					document.getElementById("guesspic").setAttribute("src", "assets/img/heads.png");
+					document.getElementById("resultflip").innerHTML = result.flip;
+					document.getElementById("resultpic").setAttribute("src", "assets/img/"+result.flip+".png");
+					document.getElementById("resultresult").innerHTML = result.result;
+				})
+            }
+
+guesstails = document.getElementById("guesstails")
+guesstails.addEventListener("click", guessFliptails)
+			function guessFliptails() {
+                fetch('http://localhost:5000/app/flip/call/tails', {mode: 'cors'})
+  				.then(function(response) {
+    			  return response.json();
+  				})
+				.then(function(result) {
+					console.log(result);
+					document.getElementById("resultguess").innerHTML = "tails";
+					document.getElementById("guesspic").setAttribute("src", "assets/img/tails.png");
+					document.getElementById("resultflip").innerHTML = result.flip;
+					document.getElementById("resultpic").setAttribute("src", "assets/img/"+result.flip+".png");
+					document.getElementById("resultresult").innerHTML = result.result;
+				})
+            }

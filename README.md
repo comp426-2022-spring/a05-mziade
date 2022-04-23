@@ -144,13 +144,21 @@ curl -X GET http://localhost:5000/app/flip/coin
 #### Response body
 
 ```
-
+{"flip":"tails"}
 ```
 
 #### Response headers
 
 ```
-
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Access-Control-Allow-Origin: *
+Content-Type: application/json; charset=utf-8
+Content-Length: 16
+ETag: W/"10-N9e0DDykqBPnqphc8f4bzHcjsuM"
+Date: Fri, 22 Apr 2022 15:35:24 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
 ```
 
 ### /app/flip/call/:guess/ (GET)
@@ -305,7 +313,7 @@ _Not yet implemented_
 #### Request cURL
 
 ```
-
+curl -X POST -H 'Content-Type: application/json' -d '{"user":"test","pass":"test123"}' http://localhost:5000/app/user/new
 ```
 
 #### Response body

@@ -3,7 +3,7 @@
 // These controller methods get the request from the routes and convert them to HTTP responses with the use of any middleware as necessary.
 
 const log = require('../services/logdatabase.js');
-const myFunc = require('../middleware/mymiddleware')
+
 async function get(req, res, next) {
     try {
         res.json(await log.getAll());
