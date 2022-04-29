@@ -106,7 +106,6 @@ if(debug == true){
 }
 
 // Connect to other Endpoints
-app.use(myFunc);
 app.use(coinRoutes);
 app.use(logRoutes);
 app.use(userRoutes);
