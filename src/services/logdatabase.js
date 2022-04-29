@@ -1,9 +1,18 @@
 "use strict";
 
-const Database = require('better-sqlite3');
+const database = require('better-sqlite3');
+const fs = require('fs');
+
 // const config = require('../configs/general.config.js');
 // Connect to a database or create one if it doesn't exist yet.
-const db = new Database('log.db');
+
+const datadir = './data/';
+
+if (!fs.existsSync(datadir)){
+    fs.mkdirSync(datadir);
+}
+
+const db = new database(datadir+'log.db')
 
 // Is the database initialized or do we need to initialize it?
 const stmt = db.prepare(`
