@@ -8,7 +8,6 @@ const coinRoutes = require('./src/routes/coinRoutes.js');
 const logRoutes = require('./src/routes/logRoutes.js');
 const userRoutes = require('./src/routes/userRoutes.js');
 const myFunc = require('./src/middleware/mymiddleware.js')
-
 // Add cors dependency
 const cors = require('cors')
 // Set up cors middleware on all endpoints
@@ -22,14 +21,8 @@ args['port', 'debug', 'log', 'help']
 const port = args.port || process.env.PORT || 5000
 const debug = args.debug || process.env.debug || 'false'
 const log = args.log || process.env.log || 'true'
-const db = require('./src/services/logdatabase.js')
-if(log == 'false'){
-// Use morgan for logging to files
-// Create a write stream to append (flags: 'a') to a file
-const WRITESTREAM = fs.createWriteStream('access.log', { flags: 'a' })
-// Set up the access logging middleware
-app.use(morgan('combined', { stream: WRITESTREAM }))
-}
+const logdb = require('./src/services/logdatabase.js')
+
 const help = (`
 server.js [options]
 
@@ -51,6 +44,42 @@ if (args.help || args.h) {
     console.log(help)
     process.exit(0)
 }
+
+if (log == 'false') {
+    console.log("NOTICE: not creating file access.log")
+} else {
+// Use morgan for logging to files
+    const logdir = './log/';
+
+    if (!fs.existsSync(logdir)){
+        fs.mkdirSync(logdir);
+    }
+// Create a write stream to append to an access.log file
+    const accessLog = fs.createWriteStream( logdir+'access.log', { flags: 'a' })
+// Set up the access logging middleware
+    app.use(morgan('combined', { stream: accessLog }))
+}
+
+// Always log to database
+app.use((req, res, next) => {
+    let logdata = {
+        remoteaddr: req.ip,
+        remoteuser: req.user,
+        time: Date.now(),
+        method: req.method,
+        url: req.url,
+        protocol: req.protocol,
+        httpversion: req.httpVersion,
+        status: res.statusCode,
+        referrer: req.headers['referer'],
+        useragent: req.headers['user-agent']
+    };
+    const stmt = logdb.prepare('INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referrer, useragent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
+    const info = stmt.run(logdata.remoteaddr, logdata.remoteuser, logdata.time, logdata.method, logdata.url, logdata.protocol, logdata.httpversion, logdata.status, logdata.referrer, logdata.useragent)
+    //console.log(info)
+    next();
+})
+
 
 // Start an app server
 const server = app.listen(port, () => {
@@ -77,6 +106,7 @@ if(debug == true){
 }
 
 // Connect to other Endpoints
+app.use(myFunc);
 app.use(coinRoutes);
 app.use(logRoutes);
 app.use(userRoutes);

@@ -247,12 +247,13 @@ Keep-Alive: timeout=5
 #### Request cURL
 
 ```
-curl -X GET http://localhost:5000/app/log/access
+curl http://localhost:5000/app/log/access
 ```
 
 #### Response body
 
 ```
+[{"id":1,"remoteaddr":"::1","remoteuser":null,"time":"1651190213738.0","method":"GET","url":"/","protocol":"http","httpversion":"1.1","status":"200.0","referrer":null,"useragent":"curl/7.74.0"},{"id":2,"remoteaddr":"::1","remoteuser":null,"time":"1651190219236.0","method":"GET","url":"/app/","protocol":"http","httpversion":"1.1","status":"200.0","referrer":null,"useragent":"curl/7.74.0"}]
 
 ```
 
@@ -313,7 +314,7 @@ _Not yet implemented_
 #### Request cURL
 
 ```
-curl -X POST -H 'Content-Type: application/json' -d '{"user":"test","pass":"test123"}' http://localhost:5000/app/user/new
+
 ```
 
 #### Response body
